@@ -1,120 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lift KKTM Kemaman</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lift KKTM Kemaman</title>
 
-    <!-- IMPORTANT untuk mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: #f2f2f2;
-            text-align: center;
-        }
+.container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+}
 
-        h1 {
-            margin-top: 40px;
-            font-size: 28px;
-        }
+h1 {
+    font-size: 24px;
+    margin-top: 20px;
+}
 
-        h2 {
-            font-size: 20px;
-            color: #555;
-        }
+h2 {
+    font-size: 18px;
+    color: #555;
+}
 
-        .container {
-            max-width: 400px;
-            margin: auto;
-            padding: 20px;
-        }
+button {
+    width: 100%;
+    padding: 20px;
+    margin: 10px 0;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #4CAF50;
+    color: white;
+}
 
-        button {
-            width: 90%;
-            height: 60px;
-            margin: 12px 0;
-            font-size: 20px;
-            border-radius: 12px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-        }
+button:active {
+    background: #45a049;
+}
+</style>
 
-        button:active {
-            background-color: #3e8e41;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .status {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
-        }
-    </style>
 </head>
 
 <body>
 
 <div class="container">
-
     <h1>Lift KKTM Kemaman</h1>
+    <h2>Select Your Current Floor</h2>
 
-    <!-- PAGE 1 -->
-    <div id="page1">
-        <h2>Select Your Current Floor</h2>
-
-        <button onclick="setCurrent(1)">Floor 1</button>
-        <button onclick="setCurrent(2)">Floor 2</button>
-        <button onclick="setCurrent(3)">Floor 3</button>
-        <button onclick="setCurrent(4)">Floor 4</button>
-    </div>
-
-    <!-- PAGE 2 -->
-    <div id="page2" class="hidden">
-        <h2>Select Destination Floor</h2>
-
-        <button onclick="sendData(1)">Floor 1</button>
-        <button onclick="sendData(2)">Floor 2</button>
-        <button onclick="sendData(3)">Floor 3</button>
-        <button onclick="sendData(4)">Floor 4</button>
-    </div>
-
-    <!-- STATUS -->
-    <div class="status" id="statusText"></div>
-
+    <button onclick="goNext(1)">Floor 1</button>
+    <button onclick="goNext(2)">Floor 2</button>
+    <button onclick="goNext(3)">Floor 3</button>
+    <button onclick="goNext(4)">Floor 4</button>
 </div>
 
 <script>
-    let currentFloor = "";
-
-    function setCurrent(floor) {
-        currentFloor = floor;
-
-        document.getElementById("page1").classList.add("hidden");
-        document.getElementById("page2").classList.remove("hidden");
-
-        document.getElementById("statusText").innerText =
-            "Current Floor: " + floor;
-    }
-
-    function sendData(destination) {
-
-        document.getElementById("statusText").innerText =
-            "Moving from Floor " + currentFloor + " to Floor " + destination;
-
-        // untuk ESP32 nanti
-        fetch("http://192.168.4.1/move?from=" + currentFloor + "&to=" + destination)
-        .catch(() => console.log("ESP not connected"));
-
-        // auto reset (optional)
-        setTimeout(() => {
-            location.reload();
-        }, 3000);
-    }
+function goNext(floor){
+    localStorage.setItem("currentFloor", floor);
+    window.location.href = "destination.html";
+}
 </script>
 
 </body>
